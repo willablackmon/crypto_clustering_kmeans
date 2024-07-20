@@ -6,25 +6,25 @@ Utilitzing K-means algorithm and principal component analysis (PCA), classify cr
 
 file `Crypto_Clustering.ipynb`. draws data from `crypto_market_data.csv`
 
-    ![1721439300357](image/README/1721439300357.png)
+    ![1721440070906](image/README/1721440070906.png)
 
 #### Prepare the Data
 
 Scale data with `StandardScaler()` module from `scikit-learn` to normalize the data from the CSV file.
 
-    ![1721439318529](image/README/1721439318529.png)
+    ![1721440085236](image/README/1721440085236.png)
 
 Identify best value for k Using scaled DataFrame, by using elbow method to calculate and graph interia of values for k from 1-10.
 
 Visually determined the optimal value for `k` to be **4 clusters.**
 
-    ![1721439341691](image/README/1721439341691.png)
+    ![1721440125862](image/README/1721440125862.png)
 
 #### Cluster Cryptocurrencies with K-Means Using the Original Scaled Data
 
 Using calculated k from previous steps, cluster the cryptocurrencies and run a scatter plot of "price_change_percentage_24h" v "price_change_percentage_7d", displaying the predicted clusters color-coded.
 
-    ![1721439378126](image/README/1721439378126.png)
+    ![1721440183187](image/README/1721440183187.png)
 
 #### Optimize Clusters with Principal Component Analysis
 
@@ -32,7 +32,7 @@ Perform PCA to reduce the features to three principal components.
 
 Deterined the total explained variance of the components to be ~89%
 
-![1721439464709](image/README/1721439464709.png)
+![1721440196746](image/README/1721440196746.png)
 
 #### Find the Best Value for k Using the PCA Data
 
@@ -40,7 +40,7 @@ Again, used elbow method on PCA data to identify best value for `k`.
 
 **Optimal K value determined to be 4**, identical to that calculated on the original data.
 
-    ![1721439521827](image/README/1721439521827.png)
+    ![1721440218147](image/README/1721440218147.png)
 
 #### Cluster Cryptocurrencies with K-Means Using the PCA Data
 
