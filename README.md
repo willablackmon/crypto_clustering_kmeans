@@ -1,183 +1,97 @@
+# Module 11 Challenge: Crypto Clustering
 
+Utilitzing K-means algorithm and principal component analysis (PCA), classify cryptocurrencies according to their price fluctuations across various timeframes.
 
+### Starting out
 
+file `Crypto_Clustering.ipynb`. draws data from `crypto_market_data.csv`
 
-
-
-
-
-
-
-
-
-# Module 11 Challenge
-
-https://bootcampspot.instructure.com/courses/6442/assignments/80394?module_item_id=1260807
-
-
-In this Challenge, you’ll apply your understanding of the K-means algorithm and principal component analysis (PCA) to classify cryptocurrencies according to their price fluctuations across various timeframes. Specifically, you will examine price changes over intervals spanning 24 hours, 7 days, 30 days, 60 days, 200 days, and 1 year.
-
-### Before You Begin
-
-1. Create a new repository for this project called `CryptoClustering`.  **Do not add this homework to an existing repository** .
-2. Clone the new repository to your computer.
-3. Push your changes to GitHub.
-
-### Files
-
-Download the following files to help you get started:
-
-[Module 11 Challenge files**Links to an external site.**](https://static.bc-edx.com/ai/ail-v-1-0/m11/lms/starter/M11_Starter_Code.zip)
-
-### Instructions
-
-1. Rename the `Crypto_Clustering_starter_code.ipynb` file as `Crypto_Clustering.ipynb`.
-2. Load the `crypto_market_data.csv` into a DataFrame and set the index to the “coin_id” column.
-3. Get the summary statistics to see what the data looks like before proceeding.
+    ![1721439300357](image/README/1721439300357.png)
 
 #### Prepare the Data
 
-1. Use the `StandardScaler()` module from `scikit-learn` to normalize the data from the CSV file.
-2. Create a DataFrame with the scaled data and set the "coin_id" index from the original DataFrame as the index for the new DataFrame.
-   * The first five rows of the scaled DataFrame should appear as follows:
-     ![The first five rows of the scaled DataFrame.](https://static.bc-edx.com/ai/ail-v-1-0/m11/lms/img/scaled_DataFrame.png)
+Scale data with `StandardScaler()` module from `scikit-learn` to normalize the data from the CSV file.
 
-#### Find the Best Value for k Using the Original Scaled DataFrame
+    ![1721439318529](image/README/1721439318529.png)
 
-Use the elbow method to find the best value for `k` by completing the following steps:
+Identify best value for k Using scaled DataFrame, by using elbow method to calculate and graph interia of values for k from 1-10.
 
-1. Create a list with the number of k values from 1 to 11.
-2. Create an empty list to store the inertia values.
-3. Create a `for` loop to compute the inertia with each possible value of `k`.
-4. Create a dictionary with the data to plot the elbow curve.
-5. Plot a line chart with all the inertia values computed with the different values of `k` to visually identify the optimal value for `k`.
-6. Answer the following question in your notebook: What is the best value for `k`?
+Visually determined the optimal value for `k` to be **4 clusters.**
+
+    ![1721439341691](image/README/1721439341691.png)
 
 #### Cluster Cryptocurrencies with K-Means Using the Original Scaled Data
 
-Use the following steps to cluster the cryptocurrencies for the best value for `k` on the original scaled data:
+Using calculated k from previous steps, cluster the cryptocurrencies and run a scatter plot of "price_change_percentage_24h" v "price_change_percentage_7d", displaying the predicted clusters color-coded.
 
-1. Initialize the K-means model with the best value for `k`.
-2. Create an instance of K-means, define the number of clusters based on the best value of `k`, and then fit the model using the original scaled DataFrame.
-3. Predict the clusters to group the cryptocurrencies using the original scaled DataFrame.
-4. Create a copy of the original data and add a new column with the predicted clusters.
-5. Create a scatterplot using pandas’ `plot` as follows:
-   * Set the x-axis as "price_change_percentage_24h" and the y-axis as "price_change_percentage_7d".
+    ![1721439378126](image/README/1721439378126.png)
 
 #### Optimize Clusters with Principal Component Analysis
 
-1. Using the original scaled DataFrame, perform a PCA and reduce the features to three principal components.
-2. Retrieve the explained variance to determine how much information can be attributed to each principal component and then answer the following question in your notebook:
-   * What is the total explained variance of the three principal components?
-3. Create a new DataFrame with the PCA data and set the "coin_id" index from the original DataFrame as the index for the new DataFrame.
-   * The first five rows of the PCA DataFrame should appear as follows:
-     ![The first five rows of the PCA DataFrame.](https://static.bc-edx.com/ai/ail-v-1-0/m11/lms/img/PCA_DataFrame.png)
+Perform PCA to reduce the features to three principal components.
+
+Deterined the total explained variance of the components to be ~89%
+
+![1721439464709](image/README/1721439464709.png)
 
 #### Find the Best Value for k Using the PCA Data
 
-Use the elbow method on the PCA data to find the best value for `k` using the following steps:
+Again, used elbow method on PCA data to identify best value for `k`.
 
-1. Create a list with the number of k-values from 1 to 11.
-2. Create an empty list to store the inertia values.
-3. Create a `for` loop to compute the inertia with each possible value of `k`.
-4. Create a dictionary with the data to plot the elbow curve.
-5. Plot a line chart with all the inertia values computed with the different values of `k` to visually identify the optimal value for `k`.
-6. Answer the following questions in your notebook:
-   * What is the best value for `k` when using the PCA data?
-   * Does it differ from the best k-value found using the original data?
+**Optimal K value determined to be 4**, identical to that calculated on the original data.
+
+    ![1721439521827](image/README/1721439521827.png)
 
 #### Cluster Cryptocurrencies with K-Means Using the PCA Data
 
-Use the following steps to cluster the cryptocurrencies for the best value for `k` on the PCA data:
+Using calculated k from previous steps, cluster the cryptocurrencies and run a scatter plot of "PCA1" vs. "PCA2", displaying the predicted clusters, color-coded.
 
-1. Initialize the K-means model with the best value for `k`.
-2. Create an instance of K-means, define the number of clusters based on the best value of `k`, and then fit the model using the PCA data.
-3. Predict the clusters to group the cryptocurrencies using the PCA data.
-4. Create a copy of the DataFrame with the PCA data and add a new column to store the predicted clusters.
-5. Create a scatte rplot using pandas’ `plot` as follows:
-   * Set the x-axis as "PC1" and the y-axis as "PC2".
-6. Answer the following question:
-   * What is the impact of using fewer features to cluster the data using K-Means?
+Determined there is little difference between using fewer features to using KMeans to **cluster the PCA data (Image 2)** as compared to running KMeans on the **full, original scaled data (Image 1)**
+
+**Image 1**: KMeans clusters using **Full Original (Scaled) Data.	**
+
+![1721439634067](image/README/1721439634067.png)
+
+ **Image 2**: KMeans predicted clusters using **PCA data (3 components).**
+
+![1721439564256](image/README/1721439564256.png)
 
 #### Determine the Weights of Each Feature on Each Principal Component
 
-1. Create a DataFrame that shows the weights of each feature (column) for each principal component by using the columns from the original scaled DataFrame as the index.
-2. Which features have the strongest positive or negative influence on each component?
+Created a DataFrame the original data features vs. the PCA values that shows the weights of each feature for each principal component (PCA1, PCA2, PCA3)
 
-### Requirements
+The following DataFrames are sorted by values PCA1, PCA2, PCA3 (respectively):
 
-#### Find the Best Value for k Using the Original Scaled DataFrame (15 points)
+![1721439129611](image/README/1721439129611.png)
 
-To receive all points, you must:
+![1721439140018](image/README/1721439140018.png)
 
-* Code the elbow method algorithm to find the best value for k. Use a range from 1 to 11. (5 points)
-* Visually identify the optimal value for k by plotting a line chart of all the inertia values computed with the different values of k. (5 points)
-* Answer the following question: What’s the best value for k? (5 points)
+![1721439148296](image/README/1721439148296.png)
 
-#### Cluster Cryptocurrencies with K-Means Using the Original Scaled Data (10 points)
+Features with the strongest positive or negative influence on each PCA component:
 
-To receive all points, you must:
+**PCA1:**
 
-* Initialize the K-means model with four clusters by using the best value for k. (1 point)
-* Fit the K-means model by using the original data. (1 point)
-* Predict the clusters for grouping the cryptocurrencies by using the original data. Review the resulting array of cluster values. (3 points)
-* Create a copy of the original data, and then add a new column of the predicted clusters. (1 point)
-* Using pandas’ `plot`, create a scatter plot by setting `x="price_change_percentage_24h"` and `y="price_change_percentage_7d"`. (4 points)
+* Features that have the largest impact on  **PCA1** are "price_change_percentage:
 
-#### Optimize the Clusters with Principal Component Analysis (10 points)
+ **_200d (~59%), _1y (~57%), _60d (~32%), _30d (~19%)**
 
-To receive all points, you must:
+* These are the features that have the longest time peridos, with the two longest periods  **(200 day, 1 year) ** having the most significant impacts.
 
-* Create a PCA model instance, and set `n_components=3`. (1 point)
-* Use the PCA model to reduce the features to three principal components, then review the first five rows of the DataFrame. (2 points)
-* Get the explained variance to determine how much information can be attributed to each principal component. (2 points)
-* Answer the following question: What’s the total explained variance of the three principal components? (3 points)
-* Create a new DataFrame with the PCA data. Be sure to set the `coin_id` index from the original DataFrame as the index for the new DataFrame. Review the resulting DataFrame. (2 points)
+**PCA2:**
 
-#### Find the Best Value for k by Using the PCA Data (10 points)
+* Features that have the largest impact on  **PCA2** are "price_change_percentage:
 
-To receive all points, you must:
+ **_30d (~56%), _14d (~54%), _60d (~43%), _24h (~35%), _7d (~22%)**.
 
-* Code the elbow method algorithm, and use the PCA data to find the best value for k. Use a range from 1 to 11. (2 points)
-* Visually identify the optimal value for k by plotting a line chart of all the inertia values computed with the different values of k. (5 points)
-* Answer the following questions: What’s the best value for k when using the PCA data? Does it differ from the best value for k that you found by using the original data? (3 points)
+* These features representing the shorter of the time periods and have a larger number of features that appear to impact  **PCA2 **.
+* The longest two periods **(1 year, 200 days) ** have little impact on  **PCA2**.
 
-#### Cluster the Cryptocurrencies with K-Means by Using the PCA Data (10 points)
+**PCA3:**
 
-To receive all points, you must:
+* Features that have the largest impact on  **PCA3** are "price_change_percentage:
 
-* Initialize the K-means model with four clusters by using the best value for k. (1 point)
-* Fit the K-means model by using the PCA data. (1 point)
-* Predict the clusters for grouping the cryptocurrencies by using the PCA data. Review the resulting array of cluster values. (3 points)
-* Create a copy of the DataFrame with the PCA data, and then add a new column to store the predicted clusters. (1 point)
-* Using pandas’ `plot`, create a scatter plot by setting `x="PC1"` and `y="PC2"`. (4 points)
+ **_7d (~78%), _14d (~35%), _1y (~21%)**.
 
-#### Determine the Weights of Each Feature on Each Principal Component (15 points)
-
-To receive all points, you must:
-
-* Create a DataFrame that shows the weights of each feature (column) for each principal component by using the columns from the original scaled DataFrame as the index. (10 points)
-* Answer the following question: Which features have the strongest positive or negative influence on each component? (5 points)
-
-#### Coding Conventions and Formatting (10 points)
-
-To receive all points, you must:
-
-* Place imports at the top of the file, just after any module comments and docstrings, and before module globals and constants. (3 points)
-* Name functions and variables with lowercase characters, with words separated by underscores. (2 points)
-* Follow DRY (Don't Repeat Yourself) principles, creating maintainable and reusable code. (3 points)
-* Use concise logic and creative engineering where possible. (2 points)
-
-#### Deployment and Submission (10 points)
-
-To receive all points, you must:
-
-* Submit a link to a GitHub repository that’s cloned to your local machine and that contains your files. (4 points)
-* Use the command line to add your files to the repository. (3 points)
-* Include appropriate commit messages in your files. (3 points)
-
-#### Code Comments (10 points)
-
-To receive all points, your code must:
-
-* Be well commented with concise, relevant notes that other developers can understand. (10 points)
+* These features skew towards 1-2 week periods  **(7d, 14d)**, but also include the 1 year.
+* The  **7 day** is the single feature with the largest positive influence on the PCA values at  **78%**.
