@@ -1,97 +1,120 @@
-# Module 11 Challenge: Crypto Clustering
+# Clustering Cryptocurrencies with K-Means
 
-Utilitzing K-means algorithm and principal component analysis (PCA), classify cryptocurrencies according to their price fluctuations across various timeframes.
+This project applies clustering techniques to a cryptocurrency dataset to identify patterns in market data and group cryptocurrencies by their performance. The focus is on using machine learning models to cluster cryptocurrencies by various market performance indicators.
 
-### Starting out
+**[Data](#data)** : [Sourcing](#sourcing) | [Pre-Processing
+](#pre-processing)**[Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)** : [Optimize with Principal Component Analysis (PCA)](#optimize-clusters-with-principal-component-analysis-pca) | [Feature Weights for each Principal Component](#feature-weights-for-each-principal-component) | [Hyperparameter Tuning](#hyperparameter-tuning)
+**[Modeling](#modeling)** : [K-Means Clustering](#k-means-clustering) | [Original Data vs PCA Data](#original-data-vs-pca-data)
+**[Technologies and Tools](#technologies-and-tools)**
 
-file `Crypto_Clustering.ipynb`. draws data from `crypto_market_data.csv`
+---
 
-    ![1721440070906](image/README/1721440070906.png)
+## Abstract
 
-#### Prepare the Data
+The project clusters cryptocurrency market data using the unsupervised Machine Learning algorithm  **k-means clustering** . The goal is to identify and group cryptocurrencies based on their price change percentages over different timeframes. The analysis involves cleaning and transforming the data, performing exploratory data analysis (EDA), and applying clustering to find patterns.
 
-Scale data with `StandardScaler()` module from `scikit-learn` to normalize the data from the CSV file.
+---
 
-    ![1721440085236](image/README/1721440085236.png)
+## Data
 
-Identify best value for k Using scaled DataFrame, by using elbow method to calculate and graph interia of values for k from 1-10.
+### Sourcing
 
-Visually determined the optimal value for `k` to be **4 clusters.**
+Data is for cryptocurrency market performance metrics, including percentage changes in price over different time intervals (24 hours, 7 days, 14 days, etc.).
 
-    ![1721440125862](image/README/1721440125862.png)
+<figure>
+    <figcaption><em></em></figcaption>
+    <img src="images/1721440070906.png" style="width: 100%; max-width: 700px;" 
+         alt="1721440070906.png">
+</figure>
 
-#### Cluster Cryptocurrencies with K-Means Using the Original Scaled Data
+### Pre-Processing
 
-Using calculated k from previous steps, cluster the cryptocurrencies and run a scatter plot of "price_change_percentage_24h" v "price_change_percentage_7d", displaying the predicted clusters color-coded.
+* Missing data was handled by dropping rows with insufficient data.
+* `StandardScaler()` module from `scikit-learn` used to to normalize the market performance indicators (price changes) to ensure uniformity before clustering.
 
-    ![1721440183187](image/README/1721440183187.png)
+---
 
-#### Optimize Clusters with Principal Component Analysis
+## Exploratory Data Analysis (EDA),
 
-Perform PCA to reduce the features to three principal components.
+#### Optimize with Principal Component Analysis (PCA)
 
-Deterined the total explained variance of the components to be ~89%
+Performed PCA to reduce the features to three principal components. Determined the total explained variance of the components to be ~89%
 
-![1721440196746](image/README/1721440196746.png)
+<figure>
+    <figcaption><em></em></figcaption>
+    <img src="images//1721440196746.png" style="width: 100%; max-width: 300px;" 
+         alt="1721440070906.png">
+</figure>
 
-#### Find the Best Value for k Using the PCA Data
+#### Feature Weights for each Principal Component
 
-Again, used elbow method on PCA data to identify best value for `k`.
+Features with the strongest positive or negative weights (influence) on each PCA component.
 
-**Optimal K value determined to be 4**, identical to that calculated on the original data.
+* **PCA1:**   Features with the largest impact on **PCA1** are price_change_percentage_200d (~59%), _1y (~57%), _60d (~32%), _30d (~19%).  These are the features that have the **longest** time periods, with the two longest periods  **(200 day, 1 year) ** having the most significant impacts.
+* **PCA2:**   Features that have the largest impact on **PCA2** are price_change_percentage_30d (~56%), _14d (~54%), _60d (~43%), _24h (~35%), _7d (~22%).  These features representing the **shorter** of the time periods.  In fact, the longest two periods (1 year, 200 days) have little impact on  **PCA2**.
 
-    ![1721440218147](image/README/1721440218147.png)
+* **PCA3:** Features that have the largest impact on **PCA3** are price_change_percentage_7d (~78%), _14d (~35%), _1y (~21%).  These features skew towards 1-2 week periods  **(7d, 14d)**, but also include the 1 year.  The **7 day** is the single feature with the largest positive influence on the PCA values at **78%**.
 
-#### Cluster Cryptocurrencies with K-Means Using the PCA Data
+Tables for each principal component (sorted by PCA1, PCA2, PCA3):
 
-Using calculated k from previous steps, cluster the cryptocurrencies and run a scatter plot of "PCA1" vs. "PCA2", displaying the predicted clusters, color-coded.
+<figure>
+    <figcaption><em>Top Feature Weights for PCA 1 (sorted by PCA 1 column):</em></figcaption>
+    <img src="images/1721439129611.png" style="width: 100%; max-width: 350px;" 
+         alt="Feature Weights on PCA">
+</figure>
 
-Determined there is little difference between using fewer features to using KMeans to **cluster the PCA data (Image 2)** as compared to running KMeans on the **full, original scaled data (Image 1)**
+<figure>
+    <figcaption><em>Top Feature Weights for PCA 2 (sorted by PCA 2 column):</em></figcaption>
+    <img src="images/1721439129611.png" style="width: 100%; max-width: 350px;" 
+         alt="Feature Weights on PCA">
+</figure>
 
-**Image 1**: KMeans clusters using **Full Original (Scaled) Data.	**
+<figure>
+    <figcaption><em>Top Feature Weights for PCA 3 (sorted by PCA 3 column):</em></figcaption>
+    <img src="images/1721439129611.png" style="width: 100%; max-width: 350px;" 
+         alt="Feature Weights on PCA">
+</figure>
 
-![1721439634067](image/README/1721439634067.png)
+#### Hyperparameter Tuning
 
- **Image 2**: KMeans predicted clusters using **PCA data (3 components).**
+* **Elbow method** used to determine optimal number of clusters by analyzing the inertia values across different k values.  k=4 shows the largest change in slope
 
-![1721439564256](image/README/1721439564256.png)
+<figure>
+    <img src="images/1721440125862.png" style="width: 100%; max-width: 400px;"
+    <figcaption><em></em></figcaption>
+</figure>
 
-#### Determine the Weights of Each Feature on Each Principal Component
+## Modeling
 
-Created a DataFrame the original data features vs. the PCA values that shows the weights of each feature for each principal component (PCA1, PCA2, PCA3)
+Modeling was performed with the **k-Means clustering** algorithm to group cryptocurrencies based on their price performance over various time intervals.
 
-The following DataFrames are sorted by values PCA1, PCA2, PCA3 (respectively):
+Optimal n_clusters = 4 was determined in a previous step and applied it to the **original data** and the reduced **PCA data** (to see if any significant differences existed).
 
-![1721439129611](image/README/1721439129611.png)
 
-![1721439140018](image/README/1721439140018.png)
+**Fig 1:** Scatter plot for the Original Data, **price_change_percentage_24h vs. price_change_percentage_7d**, displaying predicted clusters in different colors:
 
-![1721439148296](image/README/1721439148296.png)
+<figure>
+    <img src="images/1721439634067.png" style="width: 100%; max-width: 400px;" 
+         alt=""K-Means clustering for on the original data">
+    <figcaption><em>Fig 1: K-Means on the original data:</em></figcaption>
+</figure>
 
-Features with the strongest positive or negative influence on each PCA component:
 
-**PCA1:**
+**Fig 2**: Scatter plot for **PCA1 vs. PCA2**, displaying predicted clusters, color-coded:
 
-* Features that have the largest impact on  **PCA1** are "price_change_percentage:
+<figure>
+    <img src="images/1721439564256.png" style="width: 100%; max-width: 400px;" alt="K-Means on PCA data">
+<figcaption><em>`Fig 2: K-Means on PCA data:</em></figcaption>
+</figure>
 
- **_200d (~59%), _1y (~57%), _60d (~32%), _30d (~19%)**
 
-* These are the features that have the longest time peridos, with the two longest periods  **(200 day, 1 year) ** having the most significant impacts.
+---
 
-**PCA2:**
+## Technologies and Tools
 
-* Features that have the largest impact on  **PCA2** are "price_change_percentage:
-
- **_30d (~56%), _14d (~54%), _60d (~43%), _24h (~35%), _7d (~22%)**.
-
-* These features representing the shorter of the time periods and have a larger number of features that appear to impact  **PCA2 **.
-* The longest two periods **(1 year, 200 days) ** have little impact on  **PCA2**.
-
-**PCA3:**
-
-* Features that have the largest impact on  **PCA3** are "price_change_percentage:
-
- **_7d (~78%), _14d (~35%), _1y (~21%)**.
-
-* These features skew towards 1-2 week periods  **(7d, 14d)**, but also include the 1 year.
-* The  **7 day** is the single feature with the largest positive influence on the PCA values at  **78%**.
+* **Tools and Libraries** : Python, Pandas, and Jupyter Notebook for data analysis and reporting.
+* **Data Cleaning and Preparation** : Cleaned the dataset, handled missing data, and ensured consistent formatting across the dataset.
+* **Data Scaling** : Used **StandardScaler** from **scikit-learn** to normalize features for clustering.
+* **Visualizations** : Created histograms, scatter plots, and correlation heatmaps using **matplotlib** and  **seaborn** .
+* **Clustering Algorithm** : Applied **k-means** from **scikit-learn** to perform clustering analysis.
+* **Elbow Plot** : Used to determine the optimal number of clusters for k-means by plotting inertia values.
