@@ -5,13 +5,23 @@ This project applies clustering techniques to a cryptocurrency dataset to identi
 **[Data](#data)** : [Sourcing](#sourcing) | [Pre-Processing
 ](#pre-processing)**[Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)** : [Optimize with Principal Component Analysis (PCA)](#optimize-clusters-with-principal-component-analysis-pca) | [Feature Weights for each Principal Component](#feature-weights-for-each-principal-component) | [Hyperparameter Tuning](#hyperparameter-tuning)
 **[Modeling](#modeling)** : [K-Means Clustering](#k-means-clustering) | [Original Data vs PCA Data](#original-data-vs-pca-data)
-**[Technologies and Tools](#technologies-and-tools)**
 
 ---
 
 ## Abstract
 
 The project clusters cryptocurrency market data using the unsupervised Machine Learning algorithm  **k-means clustering** . The goal is to identify and group cryptocurrencies based on their price change percentages over different timeframes. The analysis involves cleaning and transforming the data, performing exploratory data analysis (EDA), and applying clustering to find patterns.
+
+---
+
+## Technologies and Tools
+
+* ****Tools and Libraries** :** Python, Pandas, Jupyter Notebook (data cleaning, pre-processing)
+* **Visualizations** : histograms, scatter plots, and correlation heatmaps created using **matplotlib** and **seaborn** to explore data distribution and relationships.
+* **Data Scaling** : **StandardScaler** from **scikit-learn** used to normalize features before clustering.
+* **Dimensionality Reduction** : **Principal Component Analysis (PCA)** for feature decomposition, reducing the dataset to key principal components while preserving ~89% of the variance.
+* **Clustering Algorithm** : Applied unsupervised Machine Learning model **k-means** from **scikit-learn** to perform clustering analysis
+* **Hyperparameter Tuning:** **elbow plot** of k vs. intertia values used to determine optimal number of clusters for k-means
 
 ---
 
@@ -117,6 +127,7 @@ Optimal n_clusters = 4 was determined in a previous step and applied it to the *
 </figure>
 
 ---
+
 
 ## Technologies and Tools
 
