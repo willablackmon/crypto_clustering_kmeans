@@ -1,6 +1,6 @@
-# Clustering Cryptocurrencies with K-Means
+# Clustering Cryptocurrencies with Unsupervised Machine Learning (K-Means)
 
-This project applies clustering techniques to a cryptocurrency dataset to identify patterns in market data and group cryptocurrencies by their performance. The focus is on using machine learning models to cluster cryptocurrencies by various market performance indicators.
+Apply clustering techniques to cryptocurrency dataset to identify patterns in market data and group cryptocurrencies by performance. Focus is on clustering cryptocurrencies by various market performance indicators.
 
 **[Data](#data)** : [Sourcing](#sourcing) | [Pre-Processing
 ](#pre-processing)**[Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)** : [Optimize with Principal Component Analysis (PCA)](#optimize-clusters-with-principal-component-analysis-pca) | [Feature Weights for each Principal Component](#feature-weights-for-each-principal-component) | [Hyperparameter Tuning](#hyperparameter-tuning)
@@ -10,7 +10,7 @@ This project applies clustering techniques to a cryptocurrency dataset to identi
 
 ## Abstract
 
-The project clusters cryptocurrency market data using the unsupervised Machine Learning algorithm  **k-means clustering** . The goal is to identify and group cryptocurrencies based on their price change percentages over different timeframes. The analysis involves cleaning and transforming the data, performing exploratory data analysis (EDA), and applying clustering to find patterns.
+Identify and group cryptocurrency market data using unsupervised Machine Learning algorithm  **k-means clustering** .   Analyze price change percentages over different timeframes. Analysis involves cleaning and transforming the data, performing exploratory data analysis (EDA), and applying clustering to find patterns.
 
 ---
 
@@ -97,8 +97,8 @@ Tables for each principal component (sorted by PCA1, PCA2, PCA3):
 
 #### Hyperparameter Tuning
 
-* **Elbow method** used to determine optimal number of clusters by analyzing the inertia values across different k values.  k=4 shows the largest change in slop
-* The best value for k was the same with the PCA data as determined using the original data.
+* **Elbow method** used to determine optimal number of clusters by analyzing the inertia values across different k values.  k=4 shows the largest change in slope.
+* The best value for k was the same with the PCA data, as determined using the original data.
 
 <figure>
     <img src="images/1721440125862.png" style="width: 100%; max-width: 400px;"
@@ -127,13 +127,3 @@ Optimal n_clusters = 4 was determined in a previous step and applied it to the *
 </figure>
 
 ---
-
-
-## Technologies and Tools
-
-* **Data Scaling** : Utilized **StandardScaler** from **scikit-learn** to normalize features before clustering.
-* **Dimensionality Reduction** : **Principal Component Analysis (PCA)** for feature decomposition, reducing the dataset to key principal components while preserving ~89% of the variance.
-* **Clustering Algorithm** : Applied **k-means** from **scikit-learn** to perform clustering analysis.
-* **Visualizations** : Generated histograms, scatter plots, and correlation heatmaps using **matplotlib** and **seaborn** to explore data distribution and relationships.
-* **Elbow Plot** : Used the **Elbow method** to determine the optimal number of clusters for k-means by plotting inertia values.
-* **Tools and Libraries** : Python, Pandas, and Jupyter Notebook for data analysis for data cleaning and preparation to handle missing data and ensure consistent formatting across the dataset.
